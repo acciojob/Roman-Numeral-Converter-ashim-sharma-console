@@ -1,41 +1,70 @@
-function toRoman(num) {
-  if (num <= 0 || num > 100000) return 'Invalid input';
+document.addEventListener('DOMContentLoaded', function() {
+    const numberInput = document.getElementById('numberInput');
+    const convertBtn = document.getElementById('convertBtn');
+    const resultDiv = document.getElementById('result');
 
-  const romanMap = [
-    ['M', 1000],
-    ['CM', 900],
-    ['D', 500],
-    ['CD', 400],
-    ['C', 100],
-    ['XC', 90],
-    ['L', 50],
-    ['XL', 40],
-    ['X', 10],
-    ['IX', 9],
-    ['V', 5],
-    ['IV', 4],
-    ['I', 1]
-  ];
+    convertBtn.addEventListener('click', function() {
+        // Clear previous results
+        resultDiv.className = '';
+        resultDiv.textContent = '';
 
-  let result = '';
-  for (const [symbol, value] of romanMap) {
-    while (num >= value) {
-      result += symbol;
-      num -= value;
+        // Get input value
+        const num = parseInt(numberInput.value);
+
+        // Validate input
+        if (isNaN(num)) {
+            resultDiv.textContent = 'Please enter a valid number';
+            resultDiv.className = 'error';
+            return;
+        }
+
+        if (num < 1 || num > 100000) {
+            resultDiv.textContent = 'Number must be between 1 and 100,000';
+            resultDiv.className = 'error';
+            return;
+        }
+
+        // Convert to Roman numeral
+        const romanNumeral = convertToRoman(num);
+        resultDiv.textContent = `${num} in Roman numerals is: ${romanNumeral}`;
+    });
+
+    function convertToRoman(num) {
+        if (num === 0) return "Romans didn't have a symbol for zero";
+        
+        const valSym = [
+            [100000, 'ↈ'],
+            [90000, 'ↂↈ'],
+            [50000, 'ↇ'],
+            [40000, 'ↂↇ'],
+            [10000, 'ↂ'],
+            [9000, 'Mↂ'],
+            [5000, 'ↁ'],
+            [4000, 'Mↁ'],
+            [1000, 'M'],
+            [900, 'CM'],
+            [500, 'D'],
+            [400, 'CD'],
+            [100, 'C'],
+            [90, 'XC'],
+            [50, 'L'],
+            [40, 'XL'],
+            [10, 'X'],
+            [9, 'IX'],
+            [5, 'V'],
+            [4, 'IV'],
+            [1, 'I']
+        ];
+        
+        let roman = '';
+        
+        for (const [value, symbol] of valSym) {
+            while (num >= value) {
+                roman += symbol;
+                num -= value;
+            }
+        }
+        
+        return roman;
     }
-  }
-
-  return result;
-}
-
-function convertToRoman() {
-  const input = document.getElementById('numberInput').value;
-  const number = parseInt(input, 10);
-
-  const roman = toRoman(number);
-  document.getElementById('result').textContent = roman;
-}
-
-// Export for test compatibility (optional)
-window.toRoman = toRoman;
-window.convertToRoman = convertToRoman;
+});
