@@ -33,14 +33,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (num === 0) return "Romans didn't have a symbol for zero";
         
         const valSym = [
-            [100000, 'ↈ'],
-            [90000, 'ↂↈ'],
-            [50000, 'ↇ'],
-            [40000, 'ↂↇ'],
-            [10000, 'ↂ'],
-            [9000, 'Mↂ'],
-            [5000, 'ↁ'],
-            [4000, 'Mↁ'],
             [1000, 'M'],
             [900, 'CM'],
             [500, 'D'],
